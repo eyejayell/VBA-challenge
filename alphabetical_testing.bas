@@ -1,14 +1,14 @@
 Attribute VB_Name = "Module1"
 Sub Stock_Test()
 
+For Each ws In Worksheets
+
 Dim ticker As String
 
-Dim total_value As Double
+Dim total_volume As Double
 
 Dim summary_table_row As Integer
 summary_table_row = 2
-
-For Each ws In Worksheets
 
 LastRow = ws.Cells(Rows.Count, 1).End(xlUp).Row
 
@@ -20,11 +20,18 @@ ws.Cells(1, 12).Value = "Total Stock Volume"
 ws.Columns("I:M").AutoFit
 
 For i = 2 To LastRow
-    If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
-        ticker = Cells(i, 1).Value
-        Range("I" & summary_table_row).Value = ticker
+    If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1).Value Then
+        ticker = ws.Cells(i, 1).Value
+        total_volume = total_volume + ws.Cells(i, 7).Value
+        ws.Cells(summary_table_row, 9).Value = ticker
+        ws.Cells(summary_table_row, 12).Value = total_volume
+        
         summary_table_row = summary_table_row + 1
         ticker = ""
+        total_volume = 0
+        
+    Else
+        total_volume = total_volume + ws.Cells(i, 7).Value
         
     End If
     
@@ -34,3 +41,4 @@ Next ws
 
 
 End Sub
+
