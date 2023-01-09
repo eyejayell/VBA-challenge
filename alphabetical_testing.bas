@@ -6,6 +6,7 @@ For Each ws In Worksheets
 Dim ticker As String
 
 Dim total_volume As Double
+total_volume = 0
 
 Dim summary_table_row As Integer
 summary_table_row = 2
@@ -55,6 +56,7 @@ For i = 2 To LastRow
         
     ElseIf ws.Cells(i - 1, 1).Value <> ws.Cells(i, 1).Value Then
         open_price = ws.Cells(i, 3).Value
+        total_volume = total_volume + ws.Cells(i, 7).Value
     
     Else
         total_volume = total_volume + ws.Cells(i, 7).Value
